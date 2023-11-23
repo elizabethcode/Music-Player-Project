@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="Style.css">
+    <script src="https://kit.fontawesome.com/400b9c5ca3.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Main container for the music player -->
+    <div class="Container" id="container">
+        <div controls class="MusicPlayer">
+            
+            <!-- Song cover image -->
+            <img src="Media/Viva La Vida By Coldplay Album Cover.png" class="SongImage" id="backgroundImage">
+
+            <!-- Song title and artist information -->
+            <h1 id="songTitle">Viva La Vida</h1>
+            <p id="artistName">Coldplay</p>
+
+             <!-- Audio element for playing the song with loop attribute -->
+            <audio id="song" loop>
+                <source src="Media/Viva La Vida By Coldplay.mp3" type="audio/mpeg">
+            </audio>
+
+             <!-- Progress bar to indicate the song's progress -->
+            <input type="range" value="0" id="Progress">
+
+             <!-- Control buttons for the music player -->
+            <div class="Controls">
+                <div onclick="playPreviousTrack()"><i class="fas fa-backward"></i></div> <!-- Button to play the previous track -->
+                <div onclick="PlayPause()"><i class="fas fa-play" id="ControlIcon"></i></div> <!-- Button to play/pause the current track -->
+                <div onclick="playNextTrack()"><i class="fas fa-forward"></i></div> <!-- Button to play the next track -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript section for handling music player functionality -->
+    <script>
+        // DOM elements
+        let Progress = document.getElementById("Progress");
+        let Song = document.getElementById("song");
+        let ControlIcon = document.getElementById("ControlIcon");
+        let LoopIcon = document.getElementById("loopIcon");
+        let Container = document.getElementById("container");
+        let BackgroundImage = document.getElementById("backgroundImage");
+        let SongTitleElement = document.getElementById("songTitle");
+        let ArtistNameElement = document.getElementById("artistName");
+
+        // Track information array
+        let tracks = [
+            { title: "Pompeii", artist: "Bastille", src: "Media/Bastille - Pompeii.mp3", cover: "Media/Bastille - Pompeii Album Cover.png" },
+            { title: "Viva La Vida", artist: "Coldplay", src: "Media/Viva La Vida By Coldplay.mp3", cover: "Media/Viva La Vida By Coldplay Album Cover.png" },
+            { title: "Counting Stars", artist: "OneRepublic", src: "Media/One Republic - Counting Stars.mp3", cover: "Media/OneRepublic Counting Stars Album Cover.png" },
+        ];
+
+        // Index of the currently playing track
+        let currentTrackIndex = 0;
+
+        // Event handler for when the metadata of the audio is loaded
+        Song.onloadedmetadata = function () {
+            Progress.max = Song.duration;
+            Progress.value = Song.currentTime;
+        }
+
+        // Function to play or pause the current track
+        function PlayPause() {
+            if (Song.paused) {
+                Song.play();
+                ControlIcon.classList.add("fa-pause");
+                ControlIcon.classList.remove("fa-play");
+                setSongCoverBackground();
+            } else {
+                Song.pause();
+                ControlIcon.classList.remove("fa-pause");
+                ControlIcon.classList.add("fa-play");
+                resetBackground();
+            }
+        }
+
+        // Function to update the progress bar during playback
+        if (Song.played) {
+            setInterval(() => {
+                Progress.value = Song.currentTime;
+            }, 500);
+        }
+
+        // Event handler for when the progress bar value changes
+        Progress.onchange = function () {
+            Song.play();
+            Song.currentTime = Progress.value;
+            ControlIcon.classList.add("fa-pause");
+            ControlIcon.classList.remove("fa-play");
+            setSongCoverBackground();
+        }
+
+        // Function to set the background using the cover image
+        function setSongCoverBackground() {
+            Container.style.backgroundImage = `url(${BackgroundImage.src})`;
+        }
+
+        // Function to reset the background when pausing
+        function resetBackground() {
+            Container.style.backgroundImage = 'none';
+            Container.style.filter = 'none';
+        }
+
+        // Function to play the next track
+        function playNextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            loadCurrentTrack();
+            if (Song.paused) {
+                ControlIcon.classList.remove("fa-pause");
+                ControlIcon.classList.add("fa-play");
+            }
+        }
+
+        // Function to play the previous track
+        function playPreviousTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            loadCurrentTrack();
+            if (Song.paused) {
+                ControlIcon.classList.remove("fa-pause");
+                ControlIcon.classList.add("fa-play");
+            }
+        }
+
+        // Function to load the currently selected track
+        function loadCurrentTrack() {
+            Song.src = tracks[currentTrackIndex].src;
+            BackgroundImage.src = tracks[currentTrackIndex].cover;
+            SongTitleElement.textContent = tracks[currentTrackIndex].title;
+            ArtistNameElement.textContent = tracks[currentTrackIndex].artist;
+            setSongCoverBackground();
+            resetBackground();
+            Song.load();
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background-color: #202020;
+    color: #f0f0f0;
+}
+
+.Container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MusicPlayer {
+    background: #303030;
+    max-width: 400px;
+    width: 100%;
+    padding: 25px 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.Navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.Navigation .Circle {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background: #fff;
+    color: #ffcc00;
+    box-shadow: 0 5px 10px rgba(255, 204, 0, 0.5);
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.SongImage {
+    width: 80%;
+    max-width: 220px;
+    border-radius: 50%;
+    border: 8px solid #fff;
+    box-shadow: 0 10px 20px rgba(255, 204, 0, 0.5);
+    margin: 20px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.MusicPlayer h1 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 15px;
+    color: #fff;
+}
+
+.MusicPlayer p {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 10px;
+    color: #ccc;
+}
+
+#Progress {
+    appearance: none;
+    width: 100%;
+    height: 12px;
+    background: #ffcc00;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 20px 0;
+    transition: background 0.3s ease;
+}
+
+#Progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #ffcc00;
+    width: 20px;
+    height: 20px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 5px 5px rgba(255, 204, 0, 0.5);
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.Controls div {
+    width: 50px;
+    height: 40px;
+    margin: 10px;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #ffcc00;
+    box-shadow: 0 5px 10px rgba(255, 204, 0, 0.5);
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.Controls div:nth-child(2) {
+    transform: scale(1.1);
+    background: #ffcc00;
+    color: #202020;
+}
